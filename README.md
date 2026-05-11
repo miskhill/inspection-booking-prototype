@@ -2,6 +2,8 @@
 
 Small React + TypeScript prototype for viewing and managing inspection bookings.
 
+Live demo: `https://inspection-booking-prototype.netlify.app/`
+
 ## What I built
 
 The prototype covers the four requested behaviours:
