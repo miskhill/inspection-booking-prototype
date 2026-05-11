@@ -179,7 +179,6 @@ function App() {
             onSelect={setSelectedBookingId}
           />
           <BookingDetails
-            key={selectedBooking ? `${selectedBooking.id}-${selectedBooking.status}` : 'empty'}
             booking={selectedBooking}
             isSaving={isSaving}
             onSave={handleStatusSave}

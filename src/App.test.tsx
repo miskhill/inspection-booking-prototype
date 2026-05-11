@@ -67,6 +67,30 @@ describe('Inspection booking prototype', () => {
     ).not.toBeInTheDocument()
   })
 
+  it('resets the draft status when the selected booking changes', async () => {
+    render(<App />)
+
+    const listRegion = await screen.findByRole('region', {
+      name: /inspection bookings/i,
+    })
+
+    await within(listRegion).findByRole('button', {
+      name: /Acme Electrical Ltd/i,
+    })
+
+    fireEvent.change(screen.getByLabelText('Status'), {
+      target: { value: 'Completed' },
+    })
+
+    fireEvent.click(
+      within(listRegion).getByRole('button', {
+        name: /Beacon Housing Association/i,
+      }),
+    )
+
+    expect(screen.getByLabelText('Status')).toHaveValue('Scheduled')
+  })
+
   it('formats stored booking dates as date-only values', () => {
     expect(formatDate('2026-05-01')).toBe('1 May 2026')
   })

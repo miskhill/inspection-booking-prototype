@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   BOOKING_STATUSES,
   type BookingStatus,
@@ -20,14 +20,22 @@ const STATUS_NOTES: Record<BookingStatus, string> = {
   Cancelled: 'This booking is no longer active and should not be scheduled.',
 }
 
+const DEFAULT_DRAFT_STATUS: BookingStatus = 'Requested'
+
 export function BookingDetails({
   booking,
   isSaving,
   onSave,
 }: BookingDetailsProps) {
   const [draftStatus, setDraftStatus] = useState<BookingStatus>(
-    booking?.status ?? 'Requested',
+    booking?.status ?? DEFAULT_DRAFT_STATUS,
   )
+
+  useEffect(() => {
+    // This local draft is intentionally reset when a different booking/status is shown.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setDraftStatus(booking?.status ?? DEFAULT_DRAFT_STATUS)
+  }, [booking?.status])
 
   if (!booking) {
     return (
