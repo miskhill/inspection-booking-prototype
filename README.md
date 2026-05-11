@@ -39,7 +39,6 @@ The app uses seeded mock data and an in-memory service layer so the UI behaves l
 This repo expects Node `20.19.0` or newer. The repo includes `.nvmrc` pinned to `20.19.0` because Vite 8 warns on older Node 20 releases.
 
 ```bash
-cd /Users/garysmith/Repositories/inspection-booking-prototype
 nvm use
 npm_config_cache=./npm-cache npm install
 npm run dev
