@@ -6,7 +6,7 @@ Live demo: `https://inspection-booking-prototype.netlify.app/`
 
 ## What I built
 
-The prototype covers the four requested behaviours:
+The prototype covers the four requested behaviours from the brief:
 
 - view a list of inspection bookings
 - filter bookings by status
@@ -25,7 +25,7 @@ The app uses seeded mock data and an in-memory service layer so the UI behaves l
 ## Structure
 
 - `src/App.tsx` owns the in-memory workflow state and coordinates filtering, selection, and status updates
-- `src/components` keeps the list, details panel, and status filter separate so each interaction is easy to explain
+- `src/components` keeps the list, details panel, and status filter separate so each interaction is easy to maintain in the future
 - `src/services/bookingService.ts` simulates async backend calls without introducing a real API
 - `src/data/mockBookings.ts` holds seeded data shaped around the brief
 
@@ -79,10 +79,11 @@ Typical deployment flow:
 
 - add search, sort, and pagination
 - show optimistic updates and richer error handling
+- add authentication using a library like Auth0, JWT, or Firebase/Supabase if we wanted it handling seperately. Magic link would also work.
 - add accessibility pass for keyboard and screen-reader polish
 - connect to a real API and persist updates
 - add broader component tests and a small end-to-end smoke test
 
 ## AI usage
 
-AI was used to help outline the implementation plan and speed up some initial boilerplate. I reviewed the output, kept the overall structure intentionally small, rejected unnecessary complexity such as routing/global state/real persistence, and adjusted the final code and README myself so I can explain the trade-offs clearly in the interview.
+AI was used to help outline the implementation plan and speed up some initial boilerplate giving me more time to focus on the core functionality and code structure. I reviewed the output, kept the overall structure intentionally small, rejected unnecessary complexity such as routing/global state/real persistence, and adjusted the final code myself.
