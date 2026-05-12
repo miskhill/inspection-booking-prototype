@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import { BookingDetails } from './components/BookingDetails'
 import { BookingList } from './components/BookingList'
 import { StatusFilter } from './components/StatusFilter'
-import { listBookings, updateBookingStatus } from './services/bookingService'
+import { useBookings } from './hooks/useBookings'
 import {
   BOOKING_STATUSES,
   type BookingStatus,
-  type InspectionBooking,
 } from './types/booking'
 
 type BookingFilter = 'All' | BookingStatus
@@ -22,47 +21,10 @@ type BannerState =
 const FILTER_OPTIONS: BookingFilter[] = ['All', ...BOOKING_STATUSES]
 
 function App() {
-  const [bookings, setBookings] = useState<InspectionBooking[]>([])
+  const { bookings, isLoading, loadError, isSaving, saveBookingStatus } = useBookings()
   const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState<BookingFilter>('All')
-  const [isLoading, setIsLoading] = useState(true)
-  const [loadError, setLoadError] = useState<string>()
-  const [isSaving, setIsSaving] = useState(false)
   const [banner, setBanner] = useState<BannerState>()
-
-  useEffect(() => {
-    let isActive = true
-
-    async function loadBookings() {
-      setIsLoading(true)
-      setLoadError(undefined)
-
-      try {
-        const initialBookings = await listBookings()
-
-        if (!isActive) {
-          return
-        }
-
-        setBookings(initialBookings)
-        setSelectedBookingId(initialBookings[0]?.id ?? null)
-      } catch {
-        if (isActive) {
-          setLoadError('The prototype could not load bookings. Refresh and try again.')
-        }
-      } finally {
-        if (isActive) {
-          setIsLoading(false)
-        }
-      }
-    }
-
-    void loadBookings()
-
-    return () => {
-      isActive = false
-    }
-  }, [])
 
   const filteredBookings =
     statusFilter === 'All'
@@ -79,17 +41,10 @@ function App() {
       return
     }
 
-    setIsSaving(true)
     setBanner(undefined)
 
     try {
-      const updatedBooking = await updateBookingStatus(selectedBooking.id, nextStatus)
-
-      setBookings((currentBookings) =>
-        currentBookings.map((booking) =>
-          booking.id === updatedBooking.id ? updatedBooking : booking,
-        ),
-      )
+      const updatedBooking = await saveBookingStatus(selectedBooking.id, nextStatus)
 
       const movedOutOfFilter =
         statusFilter !== 'All' && updatedBooking.status !== statusFilter
@@ -107,8 +62,6 @@ function App() {
         tone: 'error',
         text: 'The status update failed. The booking list is unchanged.',
       })
-    } finally {
-      setIsSaving(false)
     }
   }
 

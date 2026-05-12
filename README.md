@@ -13,7 +13,7 @@ The prototype covers the four requested behaviours from the brief:
 - select a booking and view its details
 - change the status of a booking
 
-The app uses seeded mock data and an in-memory service layer so the UI behaves like a real workflow without needing a backend or database.
+The app uses seeded mock data, a React hook for booking workflow state, and an in-memory service layer so the UI behaves like a real workflow without needing a backend or database.
 
 ## Stack
 
@@ -24,7 +24,8 @@ The app uses seeded mock data and an in-memory service layer so the UI behaves l
 
 ## Structure
 
-- `src/App.tsx` owns the in-memory workflow state and coordinates filtering, selection, and status updates
+- `src/App.tsx` owns the page-level UI state for filtering, selection, and feedback banners
+- `src/hooks/useBookings.ts` owns the React-friendly load/save workflow for booking data
 - `src/components` keeps the list, details panel, and status filter separate so each interaction is easy to maintain in the future
 - `src/services/bookingService.ts` simulates async backend calls without introducing a real API
 - `src/data/mockBookings.ts` holds seeded data shaped around the brief
@@ -32,6 +33,7 @@ The app uses seeded mock data and an in-memory service layer so the UI behaves l
 ## Technical choices
 
 - kept state local to the page because the prototype has a single workflow and does not need global state
+- initiated a custom hook for the booking workflow so the async data logic is more React-friendly while still keeping the service layer in place for future API scalability
 - used a small service layer so the UI can be extended to a real API later without rewriting component logic
 - added a couple of focused tests around the key requested behaviours instead of building a broader test harness
 - kept styling lightweight and functional so the time went into behaviour, code structure, and explainability
@@ -86,4 +88,4 @@ Typical deployment flow:
 
 ## AI usage
 
-AI was used to help outline the implementation plan and speed up some initial boilerplate giving me more time to focus on the core functionality and code structure. I reviewed the output, kept the overall structure intentionally small, rejected unnecessary complexity such as routing/global state/real persistence, and adjusted the final code myself.
+AI was used to help outline the implementation plan and speed up some initial boilerplate giving me more time to focus on the core functionality and code structure. I reviewed the output, kept the overall structure intentionally small, initiated the booking hook pattern while deliberately retaining the service layer for future API scalability, rejected unnecessary complexity such as routing/global state/real persistence, and adjusted the final code myself.
