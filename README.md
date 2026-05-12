@@ -79,7 +79,8 @@ Typical deployment flow:
 
 ## What I would improve with more time
 
-- add search, sort, and pagination
+- consider switching the booking list to a table layout, since the data is fairly tabular and may become easier to scan than cards as the list grows
+- add search and sorting alongside the existing status filter if the prototype expands to handle a larger booking volume
 - show optimistic updates and richer error handling
 - add authentication using a library like Auth0, JWT, or Firebase/Supabase if we wanted it handling seperately. Magic link would also work.
 - add accessibility pass for keyboard and screen-reader polish
