@@ -86,6 +86,7 @@ Typical deployment flow:
 - add accessibility pass for keyboard and screen-reader polish
 - connect to a real API and persist updates
 - add broader component tests and a small end-to-end smoke test
+- I18n support for multi-language for other markets
 
 ## AI usage
 
